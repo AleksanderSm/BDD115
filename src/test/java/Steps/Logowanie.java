@@ -43,7 +43,7 @@ public class Logowanie {
     @When("Użytkownik wciska przycisk zaloguj")
     public void uzytkownik_wciska_przycisk_zaloguj() {
         System.out.println("Krok 5 - uzytkownik_wciska_przycisk_zaloguj");
-    driver.findElement(By.tagName("button")).click();
+        driver.findElement(By.tagName("button")).click();
     }
 
     @Then("Użytkownik zostaje poprawnie zalogowany do aplikacji")
@@ -52,3 +52,4 @@ public class Logowanie {
         Assert.assertEquals("https://the-internet.herokuapp.com/secure", driver.getCurrentUrl());
         driver.close();
     }
+}
