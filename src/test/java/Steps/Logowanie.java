@@ -52,4 +52,18 @@ public class Logowanie {
         Assert.assertEquals("https://the-internet.herokuapp.com/secure", driver.getCurrentUrl());
         driver.close();
     }
+
+    @When("Użytkownik wpisuje niepoprawne haslo")
+    public void uzytkownik_wpisuje_niepoprawne_haslo() {
+        System.out.println("Krok 4 - użytkownik_wpisuje_poprawne_haslo");
+        driver.findElement(By.name("password")).sendKeys("FailedPassword!");
+    }
+
+    @Then("Użytkownik nie zostaje poprawnie zalogowany do aplikacji")
+    public void uzytkownik_nie_zostaje_poprawnie_zalogowany_do_aplikacji() {
+        System.out.println("Krok 6 - uzytkownik_wciska_przycisk_zaloguj");
+        Assert.assertEquals("https://the-internet.herokuapp.com/login", driver.getCurrentUrl());
+        driver.close();
+
+    }
 }
