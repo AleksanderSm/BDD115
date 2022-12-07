@@ -2,19 +2,21 @@ package Steps;
 
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.BeforeAll;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.net.URL;
 
 public class Logowanie {
-    static WebDriver driver;
+   private static WebDriver driver;
 
     @BeforeAll
     public static void setDriver() {
@@ -27,7 +29,7 @@ public class Logowanie {
     public void uzytkownik_otwiera_przegladarke() {
         System.out.println("Krok 1 - uzytkownik otwiera przegladarke");
         // driver = new ChromeDriver(); // konstruktor wywołujący przeglądarkę
-        driver.manage().window().maximize();
+      //  driver.manage().window().maximize();
 
     }
 
@@ -40,7 +42,10 @@ public class Logowanie {
     @When("Użytkownik wpisuje poprawny login")
     public void użytkownik_wpisuje_poprawny_login() {
         System.out.println("Krok 3 - użytkownik_wpisuje_poprawny_login");
-        driver.findElement(By.id("username")).sendKeys("tomsmith");
+      WebElement userInput = driver.findElement(By.id("username"));
+      userInput.clear();
+      userInput.sendKeys("tomsmith");
+       // driver.findElement(By.id("username")).sendKeys("tomsmith");
     }
 
     @When("Użytkownik wpisuje poprawne haslo")
@@ -52,7 +57,13 @@ public class Logowanie {
     @When("Użytkownik wciska przycisk zaloguj")
     public void uzytkownik_wciska_przycisk_zaloguj() {
         System.out.println("Krok 5 - uzytkownik_wciska_przycisk_zaloguj");
-        driver.findElement(By.tagName("button")).click();
+      WebElement loginButton = driver.findElement(By.tagName("button"));
+      String textButton = loginButton.getText();
+        System.out.println("Przycisk login zawiera tekst = " + textButton);
+      loginButton.click();
+
+
+        // driver.findElement(By.tagName("button")).click();
     }
 
     @Then("Użytkownik zostaje poprawnie zalogowany do aplikacji")
@@ -97,6 +108,17 @@ public class Logowanie {
         System.out.println("Krok 4 - użytkownik_wpisuje_poprawne_haslo");
         driver.findElement(By.name("password")).sendKeys(userPassword);
 
+    }
+
+    //When Użytkownik wprowadza login <loginek>
+    @When("^Użytkownik wprowadza loginek (.+)$")
+    public void uytkownik_wprowadza_login2(String loginek) {
+        driver.findElement(By.id("username")).sendKeys(loginek);
+    }
+    //When Użytkownik wprowadza haslo <haselko>
+    @And("^Użytkownik wprowadza haselko (.+)$")
+    public void uytkownik_wprowadza_haslo2(String haselko) {
+        driver.findElement(By.name("password")).sendKeys(haselko);
     }
 
     @AfterAll
