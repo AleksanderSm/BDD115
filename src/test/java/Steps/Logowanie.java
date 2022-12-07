@@ -1,5 +1,7 @@
 package Steps;
 
+import io.cucumber.java.AfterAll;
+import io.cucumber.java.BeforeAll;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,12 +14,19 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.net.URL;
 
 public class Logowanie {
-    WebDriver driver;
+    static WebDriver driver;
+
+    @BeforeAll
+    public static void setDriver() {
+        driver = new ChromeDriver();
+
+    }
+
 
     @Given("Użytkownik otwiera przeglądarkę")
     public void uzytkownik_otwiera_przegladarke() {
         System.out.println("Krok 1 - uzytkownik otwiera przegladarke");
-        driver = new ChromeDriver(); // konstruktor wywołujący przeglądarkę
+        // driver = new ChromeDriver(); // konstruktor wywołujący przeglądarkę
         driver.manage().window().maximize();
 
     }
@@ -50,7 +59,7 @@ public class Logowanie {
     public void uzytkownik_zostaje_poprawnie_zalogowany_do_aplikacji() {
         System.out.println("Krok 6 - uzytkownik_wciska_przycisk_zaloguj");
         Assert.assertEquals("https://the-internet.herokuapp.com/secure", driver.getCurrentUrl());
-        driver.close();
+        //  driver.close();
     }
 
     @When("Użytkownik wpisuje niepoprawne haslo")
@@ -63,7 +72,35 @@ public class Logowanie {
     public void uzytkownik_nie_zostaje_poprawnie_zalogowany_do_aplikacji() {
         System.out.println("Krok 6 - uzytkownik_wciska_przycisk_zaloguj");
         Assert.assertEquals("https://the-internet.herokuapp.com/login", driver.getCurrentUrl());
-        driver.close();
+        //  driver.close();
 
+    }
+
+
+    @Given("Użytkownik przechodzi na strone {string}")
+    public void użytkownik_przechodzi_na_strone(String adresStrony) {
+        //adresStrony to zmienna ktora zapamieta adres strony internetowej
+        System.out.println("Krok 2 - użytkownik_wpisuje_adres_strony_internetowej");
+        driver.navigate().to(adresStrony);
+
+    }
+
+    @When("Użytkownik wprowadza login {string}")
+    public void użytkownik_wprowadza_login(String userName) {
+        System.out.println("Krok 3 - użytkownik_wpisuje_poprawny_login");
+        driver.findElement(By.id("username")).sendKeys(userName);
+
+    }
+
+    @When("Użytkownik wprowadza haslo {string}")
+    public void użytkownik_wprowadza_haslo(String userPassword) {
+        System.out.println("Krok 4 - użytkownik_wpisuje_poprawne_haslo");
+        driver.findElement(By.name("password")).sendKeys(userPassword);
+
+    }
+
+    @AfterAll
+    public static void tearDriver() {
+        driver.close();
     }
 }

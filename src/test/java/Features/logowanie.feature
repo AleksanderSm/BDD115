@@ -3,17 +3,33 @@ Feature: Logowanie do aplikacji
   logowania do aplikacji aby kożystać z
   zaawansowanych funkcji
 
+
   Scenario: Poprawne logowanie do aplikacji
-    Given Użytkownik otwiera przeglądarkę
-    And Użytkownik wpisuje adres strony internetowej
+    Given Użytkownik wpisuje adres strony internetowej
     When Użytkownik wpisuje poprawny login
     And Użytkownik wpisuje poprawne haslo
     And Użytkownik wciska przycisk zaloguj
     Then Użytkownik zostaje poprawnie zalogowany do aplikacji
 
-  Scenario: 2 Niepoprawne logowanie do aplikacji
-    Given Użytkownik otwiera przeglądarkę
-    And Użytkownik wpisuje adres strony internetowej
+
+  Scenario: Poprawne logowanie do aplikacji wersja 2
+    Given Użytkownik przechodzi na strone "https://the-internet.herokuapp.com/login"
+    When Użytkownik wprowadza login "tomsmith"
+    And Użytkownik wprowadza haslo "SuperSecretPassword!"
+    And Użytkownik wciska przycisk zaloguj
+    Then Użytkownik zostaje poprawnie zalogowany do aplikacji
+
+
+    Scenario: Niepoprawne logowanie do aplikacji wersja 2
+      Given Użytkownik przechodzi na strone "https://the-internet.herokuapp.com/login"
+      When Użytkownik wprowadza login "tomsmith"
+      And Użytkownik wprowadza haslo "lipnehaslo"
+      And Użytkownik wciska przycisk zaloguj
+      Then Użytkownik nie zostaje poprawnie zalogowany do aplikacji
+
+
+  Scenario: Niepoprawne logowanie do aplikacji
+    Given Użytkownik wpisuje adres strony internetowej
     When Użytkownik wpisuje poprawny login
     And Użytkownik wpisuje niepoprawne haslo
     And Użytkownik wciska przycisk zaloguj
